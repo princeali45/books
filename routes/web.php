@@ -29,3 +29,8 @@ $router->get('/users/{id}', 'UserController@show'); // get user by id
 $router->put('/users/{id}', 'UserController@update'); // update user records
 $router->patch('/users/{id}', 'UserController@update'); // update user records
 $router->delete('/users/{id}', 'UserController@delete'); // delete records
+
+
+// // for login route
+// $router->get('/login', 'LoginController@index'); // get all users records
+// $router->post('/login', 'LoginController@find'); // create new user records

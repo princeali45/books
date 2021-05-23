@@ -34,24 +34,21 @@ class UserController extends Controller
         'username' => 'required|max:20',
         'password' => 'required|max:20',
         ];
-
         $this->validate($request,$rules);
         $user = User::create($request->all());
         return $this->successResponse($user, Response::HTTP_CREATED);
+
+
     }
 
     public function show($id)
     {
-        $user = User::find($id);
-        // $user = User::where('id', $id)->first();
-        if($user){
-            return $this->successResponse($user);
-        }
-        else{
-            return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);
-        }
+        $user = User::findOrFail($id);
+        // $user = User::where('id', $id)->first();    
+        return $this->successResponse($user);    
+        // return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);
+        
     }
-
 
     public function update(Request $request,$id)
     {
@@ -61,35 +58,34 @@ class UserController extends Controller
         ];
 
         $this->validate($request, $rules);
-        $user = User::find($id);  
-
-
-        if($user){
-            $user->fill($request->all());
-            // if no changes happen
-            if ($user->isClean()) {
-                return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $user->save();
-            return $this->successResponse($user);
+        $user = User::findOrFail($id);  
+        if ($user->isClean()) {
+            return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        else{
-            return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);
-        }
+        $user->save();
+        return $this->successResponse($user);
+
+        // if($user){
+        //     $user->fill($request->all());
+        //     // if no changes happen
+        //     if ($user->isClean()) {
+        //         return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
+        //     }
+
+        //     $user->save();
+        //     return $this->successResponse($user);
+        // }
+        // else{
+        //     return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);
+        // }
     }
 
     public function delete($id)
     {
-        $user = User::find($id);
-        if($user){
-            $user->delete();
-
-            return $this->successResponse($user);
-        }
-        else{
-            return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);     
-        }
+        $user = User::findOrFail($id);
+        $user->delete();
+        return $this->successResponse($user);
+        
     }
     
 }
