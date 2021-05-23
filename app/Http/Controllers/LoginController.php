@@ -35,11 +35,9 @@ class LoginController extends Controller
 
         
         $this->validate($request,$rules);
-        $user = DB::table('users')
-        ->where('username', $request->input('username'))
+        $user = User::where('username', $request->input('username'))
         ->where('password', $request->input('password'))
-        ->get();
-        
+        ->firstOrFail(); 
         return $this->successResponse($user);
     
     }
