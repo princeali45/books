@@ -8,14 +8,16 @@ class User extends Model
 {
 
     public $timestamps = false;
-
+    
     protected $table = 'users';
 
     protected $fillable = [
-        'username','password'
+        'username','password','jobid',
     ];
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'userid';
+
+    // protected $foreignKey = 'jobid';
 
 }
 

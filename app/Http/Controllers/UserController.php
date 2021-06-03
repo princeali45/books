@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserJob;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
 use App\Traits\ApiResponser;
-
 
 class UserController extends Controller
 {
@@ -33,21 +33,21 @@ class UserController extends Controller
         $rules = [
         'username' => 'required|max:20',
         'password' => 'required|max:20',
-        ];
+        'jobid' => 'required|numeric|min:1|not_in:0',
+        ];  
         $this->validate($request,$rules);
+        // uncomment last
+        // $usersjob = UserJob::findOrFail($request->jobid);
         $user = User::create($request->all());
         return $this->successResponse($user, Response::HTTP_CREATED);
-
-
     }
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        // $user = User::where('id', $id)->first();    
+        // $user = User::findOrFail($id);
+        $user = User::where('userid', $id)->first();    
         return $this->successResponse($user);    
-        // return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND);
-        
+        // return $this->errorResponse('User ID is not found', Response::HTTP_NOT_FOUND); 
     }
 
     public function update(Request $request,$id)
@@ -55,10 +55,13 @@ class UserController extends Controller
         $rules = [
         'username' => 'max:20',
         'password' => 'max:20',
+        'jobid' => 'numeric|min:1|not_in:0',
         ];
 
         $this->validate($request, $rules);
-        $user = User::findOrFail($id);  
+        // $user = User::findOrFail($id);  
+        $user = User::where('userid', $id)->firstOrFail(); 
+        $user->fill($request->all());
         if ($user->isClean()) {
             return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -82,7 +85,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
+        $user = User::where('userid', $id)->first(); 
         $user->delete();
         return $this->successResponse($user);
         

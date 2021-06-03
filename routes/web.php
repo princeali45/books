@@ -31,6 +31,11 @@ $router->patch('/users/{id}', 'UserController@update'); // update user records
 $router->delete('/users/{id}', 'UserController@delete'); // delete records
 
 
+//for job user route
+$router->get('/usersjob', 'UserJobController@index'); 
+$router->post('/usersjob', 'UserJobController@add');
+$router->get('/usersjob/{id}','UserJobController@show');
+
 // for login route
 $router->get('/login', 'LoginController@index'); // get all users records
 $router->post('/login', 'LoginController@find'); // create new user records

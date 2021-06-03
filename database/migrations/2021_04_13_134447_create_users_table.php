@@ -14,9 +14,12 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->increments('userid');
             $table->string('username');
             $table->string('password');
+            $table->unsignedBigInteger('jobid')->nullable();
+            $table->foreign('jobid')->references('jobid')->on('user_jobs')->onDelete('cascade');
+            
             // $table->rememberToken();
         });
     }
