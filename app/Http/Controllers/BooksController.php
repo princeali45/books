@@ -45,8 +45,8 @@ class BooksController extends Controller
 
     public function show($id)
     {
-        // $book = Books::findOrFail($id);
-        $book = Books::where('id', $id)->first();    
+        $book = Books::findOrFail($id);
+        // $book = Books::where('id', $id)->findOrFail();    
         return $this->successResponse($book);    
         // return $this->errorResponse('Books ID is not found', Response::HTTP_NOT_FOUND); 
     }
@@ -61,8 +61,8 @@ class BooksController extends Controller
         ];  
 
         $this->validate($request, $rules);
-        // $book = Books::findOrFail($id);  
-        $book = Books::where('id', $id)->firstOrFail(); 
+        $book = Books::findOrFail($id);  
+        // $book = Books::where('id', $id)->firstOrFail(); 
         $book->fill($request->all());
         if ($book->isClean()) {
             return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -70,25 +70,11 @@ class BooksController extends Controller
         $book->save();
         return $this->successResponse($book);
 
-        // if($book){
-        //     $book->fill($request->all());
-        //     // if no changes happen
-        //     if ($book->isClean()) {
-        //         return $this->errorResponse('At least one value must change', Response::HTTP_UNPROCESSABLE_ENTITY);
-        //     }
-
-        //     $book->save();
-        //     return $this->successResponse($book);
-        // }
-        // else{
-        //     return $this->errorResponse('Books ID is not found', Response::HTTP_NOT_FOUND);
-        // }
     }
 
     public function delete($id)
     {
-        // $book = Books::findOrFail($id);
-        $book = Books::where('id', $id)->first(); 
+        $book = Books::findOrFail($id);
         $book->delete();
         return $this->successResponse($book);
         
