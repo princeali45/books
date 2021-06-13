@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Books extends Model
 {
 
     public $timestamps = false;
     
-    protected $table = 'users';
+    protected $table = 'tblbooks';
 
     protected $fillable = [
-        'username','password','jobid',
+        'id','bookname','yearpublish','authorid',
     ];
 
-    protected $primaryKey = 'userid';
+    protected $primaryKey = 'id';
 
     // protected $foreignKey = 'jobid';
 

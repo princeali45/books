@@ -19,23 +19,15 @@ $router->get('/', function () use ($router) {
 
 // unsecure routes 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('/users',['uses' => 'UserController@getUsers']);
+    $router->get('/books',['uses' => 'BooksController@getBooks']);
 });
 
 // // more simple routes
-$router->get('/users', 'UserController@index'); // get all users records
-$router->post('/users', 'UserController@add'); // create new user records
-$router->get('/users/{id}', 'UserController@show'); // get user by id
-$router->put('/users/{id}', 'UserController@update'); // update user records
-$router->patch('/users/{id}', 'UserController@update'); // update user records
-$router->delete('/users/{id}', 'UserController@delete'); // delete records
+$router->get('/books', 'BooksController@index'); // get all books records
+$router->post('/books', 'BooksController@add'); // create new user records
+$router->get('/books/{id}', 'BooksController@show'); // get user by id
+$router->put('/books/{id}', 'BooksController@update'); // update user records
+$router->patch('/books/{id}', 'BooksController@update'); // update user records
+$router->delete('/books/{id}', 'BooksController@delete'); // delete records
 
 
-//for job user route
-$router->get('/usersjob', 'UserJobController@index'); 
-$router->post('/usersjob', 'UserJobController@add');
-$router->get('/usersjob/{id}','UserJobController@show');
-
-// for login route
-$router->get('/login', 'LoginController@index'); // get all users records
-$router->post('/login', 'LoginController@find'); // create new user records
